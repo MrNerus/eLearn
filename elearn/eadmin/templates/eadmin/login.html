@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/root.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/star.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+</head>
+<body>
+    <div class="hero fullScreen isFlex centerOnFlex">
+        <form method="post" class="isFlex flexVertical gap1">
+            {% csrf_token %}
+            <center><h1>Login as Administrator</h1></center>
+            <div class="userInput">
+                <label for="username">Username</label>
+                <input type="text" name="username" class="textField" placeholder=" " required>
+            </div>
+            <div class="userInput">
+                <label for="password">Password</label>
+                <input type="password" name="password" class="textField" placeholder=" " required>
+            </div>
+            <input type="submit" value="Login" class="submitBtn">
+        </form>
+    </div>
+</body>
+</html>

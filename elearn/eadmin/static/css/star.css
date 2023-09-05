@@ -1,0 +1,121 @@
+/* All property about flex */
+.isFlex {display: flex;}
+.centerOnFlex {align-items: center; justify-content: center;}
+.gapHalf {gap: 0.5rem}
+.gap1 {gap: 1rem}
+.flexHorizontal {flex-direction: row;}
+.flexVertical {flex-direction: column;}
+.alignCenter {align-items: center;}
+.justifyCenter {justify-content: center;}
+.justifySpaced {justify-content: space-evenly;}
+/* diminsion */
+.fullWidth {width: 100%;}
+.fullHeight {height: 100%;}
+.fullScreen {width: 100vw; height: 100vh}
+
+.marginHalf {margin: 0.5rem}
+
+/* user inputs */
+.textField {
+    position: relative;
+    width: 100%;
+    padding:0.5rem 1rem;
+    margin: 0.7rem 0 0 0;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    box-sizing: border-box;
+    font-size: var(--unitRem);
+}
+.textField:focus { outline: none; }
+/* text box style on wrong conditions */
+.userInput:has(.textField:invalid) { border: 1px solid var(--negativeEmotion); }
+.userInput:has(.textField:invalid) label { color: var(--negativeEmotion); }
+.userInput:has(.textField[required]:placeholder-shown) { border: 1px solid var(--negativeEmotion); }
+.userInput:has(.textField[required]:placeholder-shown) label { color: var(--negativeEmotion); }
+.userInput:has(.textField:invalid:focus) { box-shadow: var(--negativeGlow); }
+.userInput:has(.textField[required]:placeholder-shown):focus { box-shadow: var(--negativeGlow); }
+/* text box style if ok */
+.userInput:has(.textField:not(:invalid):focus) { box-shadow: var(--positiveGlow); }
+.userInput:has(.textField:not(:required:placeholder-shown):focus) { box-shadow: var(--positiveGlow); }
+/* input box */
+.userInput {
+    position: relative;
+    box-sizing: border-box;
+    border-radius: var(--rounding);
+    border: 1px solid var(--positiveEmotion);
+    transition: var(--transition);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.userInput label {
+    position:absolute;
+    color: var(--positiveEmotion);
+    font-size: 1rem;
+    top: 50%;
+    left: 1rem;
+    transform: translateY(-50%);
+    transition: var(--transition);
+    background-color: transparent;
+}
+.userInput:has(.textField:focus) label, .userInput:has(.textField:not(:placeholder-shown)) label{
+    top:2px; left:1rem; font-size: 0.7rem;
+    transform: translateY(0%);
+    background-blend-mode: difference;
+}
+.submitBtn {
+    padding: 0.5rem 1rem;
+    background-color: var(--positiveEmotion);
+    color: var(--textColor2);
+    transition: var(--transition);
+    cursor: pointer;
+    border: none;
+    outline: none;
+    border-radius: var(--rounding);
+}
+/* form  */
+form:has(
+    .userInput .textField:invalid,
+    .userInput .textField[required]:placeholder-shown
+) { border: 1px solid var(--negativeEmotion);}
+form:has(
+    .userInput .textField:invalid,
+    .userInput .textField[required]:placeholder-shown
+) .submitBtn { background-color: var(--negativeEmotion); cursor: not-allowed;}
+
+
+
+.circuarButton {
+    width: 2rem;
+    height: 2rem;
+    aspect-ratio: 1;
+    border-radius: var(--rounding);
+    background: transparent;
+    border: 1px solid var(--positiveEmotion);
+    color: var(--positiveEmotion)
+}
+.btn {
+    padding: 0.5rem 1rem;
+    background-color: transparent;
+    transition: var(--transition);
+    cursor: pointer;
+    outline: none;
+    border: 1px solid var(--positiveEmotion);
+    border-radius: var(--rounding);
+}
+.btn:hover {
+    box-shadow: var(--positiveGlow);
+}
+.btn_negetive {
+    padding: 0.5rem 1rem;
+    background-color: transparent;
+    transition: var(--transition);
+    cursor: pointer;
+    outline: none;
+    border: 1px solid var(--negativeEmotion);
+    border-radius: var(--rounding);
+}
+.btn_negetive:hover {
+    box-shadow: var(--negativeGlow);
+}

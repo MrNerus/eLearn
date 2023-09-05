@@ -1,0 +1,20 @@
+:root {
+    --rounding: 0.5rem;
+    --transition: 0.15s ease-in-out;
+    --negativeEmotion: #ff0000;
+    --positiveEmotion: #0000ff;
+    --positiveGlow: 0 0 0 0.1rem var(--positiveEmotion);
+    --negetiveGlow: 0 0 0 0.1rem var(--negativeEmotion);
+    --textColor2: #ffffff;
+    --textColor1: #000000;
+    --unitRem: 16px;
+}
+
+html {
+    font-size: var(--unitRem);
+}
+
+* {
+    margin:0;
+    padding: 0;
+}
