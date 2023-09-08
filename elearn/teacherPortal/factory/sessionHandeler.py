@@ -17,7 +17,7 @@ def requestIsValid(request):
     if not request.session.get("isLoggedIn"):
         clearSession(request)
         return False
-    if request.session["accessLevel"] != "Admin": # is SuperUser
+    if request.session["accessLevel"] != "Teacher": # is SuperUser
         clearSession(request)
         return False
     thatTime = datetime.strptime(request.session.get("activeTime"), '%Y-%m-%d %H:%M:%S')

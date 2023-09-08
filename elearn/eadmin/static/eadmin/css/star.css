@@ -12,8 +12,12 @@
 .fullWidth {width: 100%;}
 .fullHeight {height: 100%;}
 .fullScreen {width: 100vw; height: 100vh}
+.flexWrap {flex-wrap: wrap;}
 
 .marginHalf {margin: 0.5rem}
+.paddingHalf {padding: .5rem}
+
+.hidden {display: none}
 
 /* user inputs */
 .textField {
@@ -27,6 +31,7 @@
     box-sizing: border-box;
     font-size: var(--unitRem);
 }
+
 .textField:focus { outline: none; }
 /* text box style on wrong conditions */
 .userInput:has(.textField:invalid) { border: 1px solid var(--negativeEmotion); }
@@ -48,6 +53,9 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+}
+.hasMultipleTextField .textField {
+    border-bottom: 1px solid var(--textColor1);
 }
 .userInput label {
     position:absolute;

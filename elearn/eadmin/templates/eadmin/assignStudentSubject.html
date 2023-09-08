@@ -1,0 +1,64 @@
+{% extends 'eadmin/base.html' %}
+{% block tite %} Admin: Create Fieds {% endblock %}
+
+{% block head %}
+<style>
+    form {
+        width: min(50rem, 80%);
+        height: 70%;
+    }
+    .container {
+        border: 1px solid var(--positiveEmotion);
+        border-radius: var(--rounding);
+        padding: 1rem;
+    }
+    table {
+        border: 2px solid var(--positiveEmotion);
+        border-radius: var(--rounding);
+        overflow: hidden;
+    }
+    table th {
+        border: 1px solid var(--positiveEmotion);
+        text-align: center;
+        padding: 0.5rem 1rem;
+    }
+    table td {
+        border: 1px dotted var(--positiveEmotion);
+        text-align: center;
+        padding: 0.5rem 1rem;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="hero fullScreen isFlex alignCenter flexVertical gap1">
+    <form method="POST" class="isFlex flexVertical gap1">
+        {% csrf_token %}
+        <input type="text" name="for" value="{{ for.sectionID }}" class="hidden">
+        <table cellspacing="0">
+            <tr>
+                <th>Id</th>
+                <th>Roll</th>
+                <th>Name</th>
+                {% for i in allSubjects %}
+                <th>{{ i }}</th>
+                {% endfor %}
+            </tr>
+            {% for i_uname, i_content in allStudents.items %}
+            <tr>
+                <td>{{ i_uname }}</td>
+                <td>{{ i_content.roll }}</td>
+                <td>{{ i_content.name }}</td>
+                {% for j in i_content.subjects %}
+                <td><input type="checkbox" name="{{ i_uname }}" id="{{ i_uname }}{{ j.0 }}" value="{{ j.0 }}" {% if j.2 == "true" %}checked{% endif %}> </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+        <input type="submit" value="Save" class="submitBtn">
+    </form>
+</div>
+{% endblock %}
+
+{% block script %}
+{% endblock %}

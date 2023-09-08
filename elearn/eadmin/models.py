@@ -30,20 +30,26 @@ class Grade(models.Model):
     
 class Section(models.Model):
     grade = models.ForeignKey(Grade, related_name='sections', on_delete=models.CASCADE)
-    name = models.CharField(max_length=10)
+    name = models.CharField(max_length=10, unique=True)
 
     def __str__(self):
         return f"{self.grade.name}: {self.name}"
     
 class Subject(models.Model):
-    section = models.ForeignKey(Section, related_name="subjects", on_delete=models.CASCADE)
     name = models.CharField(max_length=32)
-    vidConference = models.CharField(max_length=128)
-    classroomLinks = models.CharField(max_length=128)
-    jamLinks = models.CharField(max_length=128)
+    vidConference = models.CharField(max_length=128, null=True)
+    classroomLinks = models.CharField(max_length=128, null=True)
+    jamLinks = models.CharField(max_length=128, null=True)
 
     def __str__(self):
-        return f"{self.name}"
+        return f"{self.name} "
+
+class SectionSubject(models.Model):
+    section = models.ForeignKey(Section, related_name="sectionSubject", on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subject, related_name="sectionsubject", on_delete=models.CASCADE)
+    def __str__(self):
+        return f"{self.section.name}:::{self.subject.name}"
+
 
 class Student(models.Model):
     username = models.CharField(max_length=32, primary_key=True)
@@ -56,10 +62,14 @@ class StudentInfo(models.Model):
     username = models.OneToOneField(Student, related_name="StudentInfo", on_delete=models.CASCADE)
     name = models.CharField(max_length=32)
     rollNo = models.IntegerField()
-    section = models.ForeignKey(Section, related_name="StudentInfo", null=True,on_delete=models.SET_NULL)
-    subjects = models.ManyToManyField(Subject, related_name="StudentInfo")
+    section = models.OneToOneField(Section, related_name="StudentInfo", null=True,on_delete=models.SET_NULL)
     def __str__(self):
         return f"{self.name} from {self.username}"
+
+class StudentSubjects(models.Model):
+    username = models.ForeignKey(Student, related_name="studentSubjects",  on_delete=models.CASCADE)
+    subject = models.ForeignKey(SectionSubject, related_name="StudentSubjects", on_delete=models.CASCADE)
+
 
 class Teacher(models.Model):
     username = models.CharField(max_length=32, primary_key=True)
@@ -67,13 +77,19 @@ class Teacher(models.Model):
     def save(self, *args, **kwargs):
         self.password = make_password(self.password)
         super().save(*args, **kwargs)
-
+ 
 class TeacherInfo(models.Model):
     username = models.OneToOneField(Teacher, related_name="TeacherInfo", on_delete=models.CASCADE)
     name = models.CharField(max_length=32)
-    subjects = models.ManyToManyField(Subject, related_name="TeacherInfo")
+    # subjects = models.ManyToManyField(Subject, related_name="TeacherInfo")
     def __str__(self):
         return f"{self.username.username}: {self.name}"
+    
+class TeacherSubjects(models.Model):
+    username = models.ForeignKey(Teacher, related_name="teacherSubjects", on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subject, related_name="teacherSubjects", null=True, on_delete=models.SET_NULL)
+    def __str__(self):
+        return f"{self.username.username} teaches {self.subject.name}"
 # Rule
 # Multiple Grades
 # One Grade has mutiple Sections. But One section cannot be in multiple Grade

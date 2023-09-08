@@ -33,11 +33,14 @@ form {
         {% csrf_token %}
         <center><h1>New Grades</h1></center>
         <div id="gradeForm" class="isFlex flexVertical gap1">
-            <div class="userInput" id="grade0">
-                <label for="grade0">Grade0</label>
-                <input type="text" class="textField" name="grade0"  placeholder=" " required>
-                <input type="button" value="-"  class="circuarButton" onclick="removeGrade(0)">
+            <div class="isFlex flexHorizontal gap1" id="grade0">
+                <div class="userInput" >
+                    <label for="grade0">Grade0</label>
+                    <input type="text" class="textField" name="grade0"  placeholder=" " required>
+                    <input type="button" value="-"  class="circuarButton" onclick="removeGrade(0)">
+                </div>
             </div>
+            
         </div>
         <div class="isFlex flexHorizontal gap1 justifySpaced">
             <input type="button" value="Add" class="btn" onclick="addNewGrade()">
@@ -50,26 +53,106 @@ form {
         {% csrf_token %}
         <center><h1>Add Sections</h1></center>
         <div id="sectionForm" class="isFlex flexVertical gap1">
-            <div class="userInput" id="section0">
-                <label for="section0">Section0</label>
-                <input type="text" class="textField" name="section0" placeholder=" " required>
-                <p>For</p>
-                <select type="text" class="textField" name="grade0"  placeholder=" " required>
-                    {% for i, j in grades.items %}
-                    <option value="{{ i }}">{{ j }}</option>
-                    {% endfor %}
-                </select>
+            <div class="isFlex flexHorizontal gap1 alignCenter" id="section0">
+                <div class="userInput">
+                    <label for="section0">Section0</label>
+                    <input type="text" class="textField" name="section0" placeholder=" " required>
+                </div>
+                <div class="userInput">
+                    <label for="grade0">Grade0</label>
+                    <select type="text" class="textField" name="grade0"  placeholder=" " required>
+                        {% for i, j in grades.items %}
+                        <option value="{{ i }}">{{ j }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
                 <input type="button" value="-"  class="circuarButton" onclick="removeSection(0)">
             </div>
         </div>
+
         <div class="isFlex flexHorizontal gap1 justifySpaced">
             <input type="button" value="Add" class="btn" onclick="addNewSection()">
             <input type="button" value="Reset" class="btn_negetive" onclick="clearAllSection()">
             <input type="submit" value="Save" class="submitBtn">
         </div>
-        
     </form>
-
+    <form action="./subject" method="POST" id="formForSubject" class="isFlex flexVertical gap1">
+        {% csrf_token %}
+        <center><h1>Add subject</h1></center>
+        <div id="subjectForm" class="isFlex flexVertical gap1">
+            <div class="isFlex flexHorizontal gap1 alignCenter" id="subject0">
+                <div class="userInput">
+                    <label for="subject0">Subject0</label>
+                    <input type="text" class="textField" name="subject0" placeholder=" " required>
+                </div>
+                <div class="userInput">
+                    <label for="grade_section0">Grade:Section0</label>
+                    <select type="text" class="textField" name="grade_section0"  placeholder=" " required>
+                        {% for i, j in sections.items %}
+                        <option value="{{ i }}">{{ j }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <input type="button" value="-"  class="circuarButton" onclick="removeSubject(0)">
+            </div>
+        </div>
+        <div class="isFlex flexHorizontal gap1 justifySpaced">
+            <input type="button" value="Add" class="btn" onclick="addNewSubject()">
+            <input type="button" value="Reset" class="btn_negetive" onclick="clearAllSubject()">
+            <input type="submit" value="Save" class="submitBtn">
+        </div>
+    </form>
+    <form action="./students" method="POST" id="formForStudent" enctype="multipart/form-data" class="isFlex flexVertical gap1">
+        {% csrf_token %}
+        <center><h1>Upload Students</h1></center>
+        <div id="studentForm" class="isFlex flexVertical gap1">
+            <div class="isFlex flexHorizontal gap1 alignCenter" id="student0">
+                <div class="userInput">
+                    <label for="file">Excel File</label>
+                    <input type="file" name="file" id="students">
+                </div>
+            </div>
+        </div>
+        <input type="submit" value="Upload" class="submitBtn">
+    </form>
+    <form action="./teachers" method="POST" id="formForTeacher" enctype="multipart/form-data" class="isFlex flexVertical gap1">
+        {% csrf_token %}
+        <center><h1>Upload Teachers</h1></center>
+        <div id="teachersForm" class="isFlex flexVertical gap1">
+            <div class="isFlex flexHorizontal gap1 alignCenter" id="teachers0">
+                <div class="userInput">
+                    <label for="file">Excel File</label>
+                    <input type="file" name="file" id="teachers">
+                </div>
+            </div>
+        </div>
+        <input type="submit" value="Upload" class="submitBtn">
+    </form>
+    <form action="./assignSubject" method="GET" id="formForTeacherSubject" class="isFlex flexVertical gap1">
+        <center><h1>Assign Subjects to teacher</h1></center>
+        <div class="userInput">
+            <label for="teacherSubject0">teacherSubject0</label>
+            <select type="text" class="textField" name="assignTeacherSubject"  placeholder=" " required>
+                {% for i, j in teachers.items %}
+                <option value="{{ i }}">{{ i }}: {{ j }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <input type="submit" value="Choose Subject" class="submitBtn">
+    </form>
+    <form action="./assignStudentSubject" method="GET" id="formForassignStudentSubject" class="isFlex flexVertical gap1">
+        <center><h1>Assign Subjects to Student</h1></center>
+        <div class="userInput">
+            <label for="section">Section</label>
+            <select type="text" class="textField" name="section"  placeholder=" " required>
+                {% for i, j in sections.items %}
+                <option value="{{ i }}">{{ j }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <input type="submit" value="Choose Subject" class="submitBtn">
+    </form>
+    
 </div>
 {% endblock %}
 
@@ -82,7 +165,7 @@ form {
         var element = document.getElementById("gradeForm")
         var str = `<div class="userInput" id="grade${gradeCounter}">
                 <label for="grade${gradeCounter}">Grade${gradeCounter}</label>
-                <input type="text" class="textField" name="grade${gradeCounter}"  placeholder=" " required>
+                <input type="text" class="textField" name="grade${gradeCounter}" placeholder=" " required>
                 <input type="button" value="-" class="circuarButton" onclick="removeGrade(${gradeCounter})">
             </div>`
         element.insertAdjacentHTML('beforeend', str);
@@ -107,31 +190,41 @@ form {
     sectionCounter = 1;
     function addNewSection() {
         var element = document.getElementById("sectionForm")
-        var str = ` <div class="userInput" id="section${sectionCounter}">
-                <label for="section${sectionCounter}">Section${sectionCounter}</label>
-                <input type="text" class="textField" name="section${sectionCounter}" placeholder=" " required>
-                <p>For</p>
-                <select type="text" class="textField" name="grade${sectionCounter}"  placeholder=" " required>
-                    {% for i, j in grades.items %}
-                    <option value="{{ i }}">{{ j }}</option>
-                    {% endfor %}
-                </select>
+        var str = `
+        <div class="isFlex flexHorizontal gap1 alignCenter" id="section${sectionCounter}">
+                <div class="userInput">
+                    <label for="section${sectionCounter}">Section${sectionCounter}</label>
+                    <input type="text" class="textField" name="section${sectionCounter}" placeholder=" " required>
+                </div>
+                <div class="userInput">
+                    <label for="grade${sectionCounter}">Grade${sectionCounter}</label>
+                    <select type="text" class="textField" name="grade${sectionCounter}"  placeholder=" " required>
+                        {% for i, j in grades.items %}
+                        <option value="{{ i }}">{{ j }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
                 <input type="button" value="-"  class="circuarButton" onclick="removeSection(${sectionCounter})">
-            </div>`
+            </div>
+            `
         element.insertAdjacentHTML('beforeend', str);
         sectionCounter += 1;
     }
     function clearAllSection() {
         document.getElementById("sectionForm").innerHTML = `
-        <div class="userInput" id="section0">
-                <label for="section0">Section0</label>
-                <input type="text" class="textField" name="section0" placeholder=" " required>
-                <p>For</p>
-                <select type="text" class="textField" name="grade0"  placeholder=" " required>
-                    {% for i, j in grades.items %}
-                    <option value="{{ i }}">{{ j }}</option>
-                    {% endfor %}
-                </select>
+        <div class="isFlex flexHorizontal gap1 alignCenter" id="section0">
+                <div class="userInput">
+                    <label for="section0">Section0</label>
+                    <input type="text" class="textField" name="section0" placeholder=" " required>
+                </div>
+                <div class="userInput">
+                    <label for="grade0">Grade0</label>
+                    <select type="text" class="textField" name="grade0"  placeholder=" " required>
+                        {% for i, j in grades.items %}
+                        <option value="{{ i }}">{{ j }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
                 <input type="button" value="-"  class="circuarButton" onclick="removeSection(0)">
             </div>
         `
@@ -143,31 +236,107 @@ form {
     }
     document.getElementById("formForSection").addEventListener("submit", function(event) {
         event.preventDefault();
-        // formData = {"csrfmiddlewaretoken": document.getElementById('formForSection').getElementsByTagName("input")[0].value}
         formData = {}
-        allElements = document.getElementById("sectionForm").querySelectorAll("div[class='userInput']");
-        console.log(allElements)
-        for (let i = 0; i < allElements.length; i++) {
-            thisGrade = ((allElements[i].getElementsByTagName("select"))[0]).value;
-            thisSection = ((allElements[i].getElementsByTagName("input"))[0]).value;
+        allRow = Array.from(document.getElementById("sectionForm").children); 
+        allRow.forEach(i => {
+            thisGrade = ((i.getElementsByTagName("select"))[0]).value;
+            thisSection = ((i.getElementsByTagName("input"))[0]).value;
             if ( thisGrade in formData) { formData[thisGrade].push(thisSection); }
             else { formData[thisGrade] = [thisSection]; }
-        }
+        });
         let json = JSON.stringify(formData);
-        alert(json);
+        // alert(json);
+
         fetch(event.target.action, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': document.getElementById('formForSection').getElementsByTagName("input")[0].value
-        },
-        body: json,
-    }).then(response => response.json())
-      .then(data => {
-        if (data['message'] == 'ok') {alert(`Sections added Successfully.`);}
-        else {alert(`Error: ${data['message']}`);}
-      })
-      .catch(error => alert(`Error: ${error}`));
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.getElementById('formForSection').getElementsByTagName("input")[0].value
+            },
+            body: json,
+        }).then(response => response.json())
+        .then(data => {
+            if (data['message'] == 'ok') {alert(`Sections added Successfully.`);}
+            else {alert(`Error: ${data['message']}`);}
+        })
+        .catch(error => alert(`Error: ${error}`));
+    })
+</script>
+<script>
+    subjectCounter = 1;
+    function addNewSubject() {
+        var element = document.getElementById("subjectForm")
+        var str = `
+        <div class="isFlex flexHorizontal gap1 alignCenter" id="subject${subjectCounter}">
+                <div class="userInput">
+                    <label for="subject${subjectCounter}">Subject${subjectCounter}</label>
+                    <input type="text" class="textField" name="subject${subjectCounter}" placeholder=" " required>
+                </div>
+                <div class="userInput">
+                    <label for="grade_section${subjectCounter}">Grade:Section${subjectCounter}</label>
+                    <select type="text" class="textField" name="grade_section${subjectCounter}"  placeholder=" " required>
+                        {% for i, j in sections.items %}
+                        <option value="{{ i }}">{{ j }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <input type="button" value="-"  class="circuarButton" onclick="removeSubject(${subjectCounter})">
+            </div>
+        
+            `
+        element.insertAdjacentHTML('beforeend', str);
+        subjectCounter += 1;
+    }
+    function clearAllSubject() {
+        document.getElementById("subjectForm").innerHTML = `
+        <div class="isFlex flexHorizontal gap1 alignCenter" id="subject0">
+                <div class="userInput">
+                    <label for="subject0">Subject0</label>
+                    <input type="text" class="textField" name="subject0" placeholder=" " required>
+                </div>
+                <div class="userInput">
+                    <label for="grade_section0">Grade:Section0</label>
+                    <select type="text" class="textField" name="grade_section0"  placeholder=" " required>
+                        {% for i, j in sections.items %}
+                        <option value="{{ i }}">{{ j }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <input type="button" value="-"  class="circuarButton" onclick="removeSubject(0)">
+            </div>
+        `
+        subjectCounter = 1;
+    }
+    function removeSubject(x) {
+        var element = document.getElementById(`subject${x}`);
+        element.parentNode.removeChild(element)
+    }
+    document.getElementById("formForSubject").addEventListener("submit", function(event) {
+        event.preventDefault();
+        formData = {}
+        allRow = Array.from(document.getElementById("subjectForm").children); 
+        allRow.forEach(i => {
+            thisSection = ((i.getElementsByTagName("select"))[0]).value;
+            thisSubject = ((i.getElementsByTagName("input"))[0]).value;
+            if ( thisSection in formData) { formData[thisSection].push(thisSubject); }
+            else { formData[thisSection] = [thisSubject]; }
+        });
+        let json = JSON.stringify(formData);
+        // alert(json);
+
+        fetch(event.target.action, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.getElementById('formForSubject').getElementsByTagName("input")[0].value
+            },
+            body: json,
+        }).then(response => response.json())
+        .then(data => {
+            if (data['message'] == 'ok') {alert(`Sections added Successfully.`);}
+            else {alert(`Error: ${data['message']}`);}
+        })
+        .catch(error => alert(`Error: ${error}`));
     })
 </script>
 {% endblock %}
